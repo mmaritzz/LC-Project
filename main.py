@@ -512,8 +512,7 @@ elif game_mode == "3":
           y = np.array([dealer_bj, player_bj, num_no_blackjack])
           mylabels = [f"Dealer Blackjacks {dealer_bj}", f"Player Blackjacks {player_bj}", f"No Blackjacks {num_no_blackjack}"]
 
-          plt.pie(y, labels = mylabels, autopct='%1.1f%%', explode=[0,0,0,0.1,0], shadow=True, startangle=90)
-          plt.legend(title = "Results: ")
+          plt.pie(y, labels = mylabels, autopct='%1.1f%%', startangle=90)
           plt.show() 
   
 if __name__ == "__main__":

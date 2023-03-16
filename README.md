@@ -46,5 +46,16 @@ Since many functions are being reused, it may become apparent that it will be ea
 
 Troubleshooting this project wasn't a headache at all. I felt like if I got an error, I either knew how to fix it, or I could google a fix, or if I never knew how to do something properly, I would look it up on w3schools or other resources. The hardest part of this code was getting the multiplayer aspect to work. I couldn't tell you why, but I kept on slipping up, then I would fix that issue, then another would arise. I wouldn't say I liked this point in the code. One night, everything just worked, and I was overjoyed. I put all the projects into a final project, and everything was fine and dandy. troubleshooting the autonomous was rough, to begin with, but it evened out pretty quickly. Mainly because I wanted it to show a specific way. Once I got that down, I added .csv capabilities. This started off rough but nailed it in the end. I'm thrilled with how the information comes out on the csv file. I did the graphs in a couple of hours. I'm saddened that there is a lot you can do to make the pie charts look good, but I'll take how they look. it is easy to read and portrayed in a visually pleasing manner.
 
+
+
+
+REFERENCES:
+- https://code.visualstudio.com/docs/python/python-tutorial
+- https://www.w3schools.com/python/python_pip.asp
+- https://matplotlib.org/stable/gallery/pie_and_polar_charts/pie_features.html
+- https://docs.github.com/en/repositories/working-with-files/managing-files/adding-a-file-to-a-repository
+- https://www.w3schools.com/python/python_file_write.asp
+- https://www.w3schools.com/python/python_try_except.asp
+
  
 

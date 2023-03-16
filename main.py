@@ -12,22 +12,25 @@ print("Please select a game mode:")
 print("1. Singleplayer")
 print("2. Multiplayer")
 print("3. Autonomous")
-time.sleep(1)
+time.sleep(.5)
 
 game_mode = input("Enter your choice (1, 2, or 3): ")
-time.sleep(1)
+time.sleep(.5)
 
+# Singleplayer
 if game_mode == "1":
 
   print("Starting Singleplayer game...")
+  time.sleep(.5)
   
   deck = list(range(2, 11)) + ['J', 'Q', 'K', 'A']
   deck *= 4
 
-
+# takes a number of cards to deal and returns a list of strings representing the cards
   def deal_cards(num_cards):
     return [str(card) for card in random.sample(deck, num_cards)]
-  
+
+# takes a list of cards and calculates the value of the hand according to the rules of Blackjack
   def hand_value(hand):
     value = 0
     num_aces = 0
@@ -47,8 +50,8 @@ if game_mode == "1":
         value += 1
   
     return value
-  
-  
+
+# takes a list of cards and displays them on the screen
   def display_hand(hand, player_name=None, above=False, is_dealer=False, show_all=True):
     if above and is_dealer:
       print("Dealer's hand: ", end="")
@@ -81,8 +84,8 @@ if game_mode == "1":
       if not above and not show_all:
         print("[hidden] ", end="")
       print(f"({hand_value(hand)})")
-  
-  
+
+# represents the player's turn in the game
   def player_turn(dealer_hand):
     player_hand = deal_cards(2)
     print("\n\nDealer's hand:")
@@ -93,6 +96,7 @@ if game_mode == "1":
     while True:
       if hand_value(player_hand) > 21:
         print("Bust! You lose.")
+        time.sleep(1)
         return []
   
       choice = input("\nDo you want to (h)it or (s)tand? ")
@@ -106,8 +110,8 @@ if game_mode == "1":
         break
   
     return player_hand
-  
-  
+
+# represents the dealer's turn in the game
   def dealer_turn(player_hand, dealer_hand):
     print("\n\nDealer's hand:")
     display_hand(dealer_hand)
@@ -117,16 +121,16 @@ if game_mode == "1":
       print("\nDealer hits:")
       display_hand(dealer_hand)
   
+# deals two cards to both the player and the dealer and returns the dealer's hand and the player's hand
   def deal_initial_hands():
     dealer_hand = deal_cards(2)
     player_hand = deal_cards(2)
     return dealer_hand, player_hand
   
-  
-
+# This function is the main program that runs the game
   def main():
     
-    print("Welcome to Blackjack!\n")
+    print("Welcome to  Singleplayer Blackjack!\n")
   
 
     dealer_hand, player_hand = deal_initial_hands()
@@ -163,26 +167,25 @@ if game_mode == "1":
     if play_again == "y":
         main()
     else:
-        print("Error. Thanks for playing!")
-  
+        print("Thanks for playing!")
+        exit()
+    
   main()
 
+# Multiplayer
 elif game_mode == "2":
+
   print("Starting Multiplayer game...")
+  time.sleep(.5)
 
   deck = list(range(2, 11)) + ['J', 'Q', 'K', 'A']
   deck *= 4
 
-
+# takes a number of cards to deal and returns a list of strings representing the cards
   def deal_cards(num_cards):
     return [str(card) for card in random.sample(deck, num_cards)]
-    
-  def deal_initial_hands():
-    dealer_hand = deal_cards(2)
-    player1_hand = deal_cards(2)
-    player2_hand = deal_cards(2)
-    return dealer_hand, player1_hand, player2_hand
-  
+
+# takes a list of cards and calculates the value of the hand according to the rules of Blackjack
   def hand_value(hand):
       value = 0
       num_aces = 0
@@ -203,6 +206,7 @@ elif game_mode == "2":
   
       return value
   
+# takes a list of cards and displays them on the screen
   def display_hand(hand, player_name=None, above=False, is_dealer=False, show_all=True):
     if above and is_dealer:
       print("Dealer's hand: ", end="")
@@ -237,6 +241,7 @@ elif game_mode == "2":
         print("[hidden] ", end="")
       print(f"({hand_value(hand)})")
   
+# represents the player 1's turn in the game
   def player_turn_1(player1_hand, dealer_hand):
       player1_hand = deal_cards(2)
       print("\n\nDealer's hand:")
@@ -247,6 +252,7 @@ elif game_mode == "2":
       while True:
           if hand_value(player1_hand) > 21:
               print("Bust! Player 1 loses.")
+              time.sleep(1)
               return []
   
           choice = input("\nPlayer 1, do you want to (h)it or (s)tand? ")
@@ -261,6 +267,7 @@ elif game_mode == "2":
   
       return player1_hand
   
+# represents the player 2's turn in the game
   def player_turn_2(player2_hand, dealer_hand):
     player_hand = deal_cards(2)
     print("\n\nDealer's hand:")
@@ -271,6 +278,7 @@ elif game_mode == "2":
     while True:
       if hand_value(player_hand) > 21:
         print("Bust! Player 2 loses.")
+        time.sleep(1)
         return []
   
       choice = input("\nPlayer 2, do you want to (h)it or (s)tand? ")
@@ -284,6 +292,8 @@ elif game_mode == "2":
         break
   
     return player_hand
+  
+# represents the dealer's turn in the game
   def dealer_turn(dealer_hand):
     print("\n\nDealer's hand:")
     display_hand(dealer_hand)
@@ -292,7 +302,15 @@ elif game_mode == "2":
       dealer_hand += deal_cards(1)
       print("\nDealer hits:")
       display_hand(dealer_hand)
+
+# deals two cards to both the player's and the dealer and returns the dealer's hand and the player's hand's
+  def deal_initial_hands():
+    dealer_hand = deal_cards(2)
+    player1_hand = deal_cards(2)
+    player2_hand = deal_cards(2)
+    return dealer_hand, player1_hand, player2_hand
   
+# determins the winner of the game in every possibe outcome
   def determine_winner(player1_hand, player2_hand, dealer_hand):
       player1_value = hand_value(player1_hand)
       player2_value = hand_value(player2_hand)
@@ -340,10 +358,12 @@ elif game_mode == "2":
                       print("Player 2 wins!")
                   else:
                       print("It's a tie!")
-  
-  
+   
+# This function is the main program that runs the game
   def main():
+      
       print("Welcome to Blackjack!\n")
+      time.sleep(.5)
     
       player1_hand = []
       player2_hand = []
@@ -360,21 +380,25 @@ elif game_mode == "2":
       if play_again == "y":
           main()
       else:
-          print("Error. Thanks for playing!")
+          print("Thanks for playing!")
     
   main()
 
+# Autonomous
 elif game_mode == "3":
+
   print("Starting Autonomous game...")
-  time.sleep(1)
+  time.sleep(.5)
 
   deck = list(range(2, 11)) + ['J', 'Q', 'K', 'A']
   deck *= 4
 
 
+# takes a number of cards to deal and returns a list of strings representing the cards
   def deal_cards(num_cards):
       return [str(card) for card in random.sample(deck, num_cards)]
   
+# takes a list of cards and calculates the value of the hand according to the rules of Blackjack
   def hand_value(hand):
       value = 0
       num_aces = 0
@@ -395,6 +419,7 @@ elif game_mode == "3":
   
       return value
   
+# represents the autoplayer's turn in the game
   def autoplayer_turn(player_hand, dealer_hand):
       while True:
           if hand_value(player_hand) > 21:
@@ -407,26 +432,29 @@ elif game_mode == "3":
   
       return player_hand
   
+# represents the autodealer's turn in the game
   def autodealer_turn(player_hand, dealer_hand):
       while hand_value(dealer_hand) < 17:
           dealer_hand += deal_cards(1)
   
+# deals two cards to both the autoplayer and the autodealer and returns the autodealer's hand and the autoplayer's hand
   def deal_initial_hands():
       dealer_hand = deal_cards(2)
       player_hand = deal_cards(2)
       return dealer_hand, player_hand
   
+# This function is the main program that runs the game
   def main():
       
       print("Welcome to  Autonomous Blackjack!")
-      time.sleep(1)
+      
       num_games = int(input("How many games would you like to play? "))
-      time.sleep(1)
+      
   
       with open('blackjack_results.csv', mode='w') as file:
           writer = csv.writer(file, lineterminator = '\n')
-          writer.writerow(["Game", "Dealer Win", "Player Win", "Ties", "Dealer Blackjacks", "Player Blackjack", "No blackjack"])
-  
+          writer.writerow(["Game", "Dealer Win", "Player Win", "Ties", "Dealer Blackjack", "Player Blackjack", "No blackjack"])
+
           wins = 0
           losses = 0
           ties = 0
@@ -510,9 +538,31 @@ elif game_mode == "3":
           time.sleep(2)
 
           y = np.array([dealer_bj, player_bj, num_no_blackjack])
-          mylabels = [f"Dealer Blackjacks {dealer_bj}", f"Player Blackjacks {player_bj}", f"No Blackjacks {num_no_blackjack}"]
+          labels = ["Dealer Blackjacks", "Player Blackjacks", "No Blackjacks"]
+          explode = (0.05, 0.05, 0)
 
-          plt.pie(y, labels = mylabels, autopct='%1.1f%%', startangle=90)
+          fig, ax = plt.subplots()
+          plt.pie(y, labels = labels, explode=explode, autopct='%1.1f%%', startangle=90, colors=['black', 'red', 'green'])
+          
+          fig.set_facecolor('#4f4f4f')
+          ax.set_title('Chances of a blackjack compared to no blackjack')
+
+          for text in ax.texts:
+            text.set_color('yellow')
+
+          y = np.array([wins, losses, ties])
+          labels = ["Wins", "Losses", "Ties"]
+          explode = (0, 0, 0)
+
+          fig, ax = plt.subplots()
+          plt.pie(y, labels = labels, explode=explode, autopct='%1.1f%%', startangle=90, colors=['blue', 'red', 'yellow'])
+          
+          fig.set_facecolor('#4f4f4f')
+          ax.set_title('Chance of Winning')
+
+          for text in ax.texts:
+            text.set_color('black')
+
           plt.show() 
   
 if __name__ == "__main__":

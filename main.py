@@ -136,7 +136,7 @@ if game_mode == "1":
     dealer_hand, player_hand = deal_initial_hands()
   
 
-   
+
     h = 1
     while h == 1:   
   
@@ -362,7 +362,7 @@ elif game_mode == "2":
 # This function is the main program that runs the game
   def main():
       
-      print("Welcome to Blackjack!\n")
+      print("Welcome to  Multiplayer Blackjack!\n")
       time.sleep(.5)
     
       player1_hand = []
@@ -381,7 +381,8 @@ elif game_mode == "2":
           main()
       else:
           print("Thanks for playing!")
-    
+          exit()
+
   main()
 
 # Autonomous
@@ -533,7 +534,7 @@ elif game_mode == "3":
           print(f"Wins: {wins}")
           print(f"Losses: {losses}")
           print(f"Total Blackjacks: {total_bj}")
-          print("Check .csv for more info. Info displayed on graphs via matplotlib")
+          print("Check .csv for more info. More info displayed on graphs via matplotlib")
           print("\n------- DONE -------")
           time.sleep(2)
 
@@ -565,7 +566,7 @@ elif game_mode == "3":
 
           plt.show() 
   
-if __name__ == "__main__":
+  if __name__ == "__main__":
     main()
 
 else:

@@ -4,7 +4,7 @@
 
  Demo of graphs:
 
- RESULTS: 10000 GAMES (csv included with files)
+ RESULTS: 10000 GAMES
  
 <img src="https://user-images.githubusercontent.com/118645227/225509523-d28f2c7a-9c82-4ff9-bca9-840acd453cbc.png" width="500"> <img src="https://user-images.githubusercontent.com/118645227/225509556-66d66cd0-c322-484a-9a6e-0b5f7f87a518.png" width="500">
 

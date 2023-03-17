@@ -1,6 +1,7 @@
 # LC-Project
 
 
+## ***Write up is below the graphs.***
 
 ### Demo of graphs:
 
@@ -17,8 +18,8 @@ RESULTS: 10000 GAMES
 
 
 
-## Blackjack
-### LCCS Project Write up 2022/23
+## LCCS Project Write up 2022/23
+### Blackjack
 
 Exam Number: 140802
 

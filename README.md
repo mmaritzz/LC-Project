@@ -9,10 +9,8 @@ RESULTS: 10000 GAMES
  
 <img src="https://user-images.githubusercontent.com/118645227/225812695-2ce5db47-0029-4176-9e9c-22a4f634c3c5.png" width="410"> <img src="https://user-images.githubusercontent.com/118645227/225812768-b107478f-6e8b-453c-938d-1babfa5f03f4.png" width="410">
 
-****
-****
-****
 
+****
 
 ## LCCS Project Write up 2022/23
 ### Blackjack

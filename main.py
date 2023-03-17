@@ -1,5 +1,5 @@
 import random
-import time # time.sleep(1)
+import time
 import csv
 import matplotlib.pyplot as plt
 import numpy as np
@@ -33,13 +33,13 @@ time.sleep(.5)
 game_mode = input("\nEnter your choice (1, 2, or 3): ")
 time.sleep(.5)
 
-# Singleplayer
+# singleplayer
 if game_mode == "1":
-
 
   animation = ["Starting Singleplayer game.","Starting Singleplayer game..", "Starting Singleplayer game..."]
 
   print("\n\n")
+
   for i in range(len(animation)):
       time.sleep(.6)
       sys.stdout.write("\r" + animation[i % len(animation)])
@@ -47,6 +47,10 @@ if game_mode == "1":
 
   time.sleep(1)
   print("\n")
+
+  time.sleep(1)
+  print("\nWelcome to  Singleplayer Blackjack!\n\n")
+  time.sleep(1)
   
   deck = list(range(2, 11)) + ['J', 'Q', 'K', 'A']
   deck *= 4
@@ -57,92 +61,87 @@ if game_mode == "1":
 
 # takes a list of cards and calculates the value of the hand according to the rules of Blackjack
   def hand_value(hand):
-    value = 0
-    num_aces = 0
-  
-    for card in hand:
-      if card in ['J', 'Q', 'K']:
-        value += 10
-      elif card == 'A':
-        num_aces += 1
-      else:
-        value += int(card)
-  
-    for i in range(num_aces):
-      if value + 11 <= 21:
-        value += 11
-      else:
-        value += 1
-  
-    return value
+      value = 0
+      num_aces = 0
+
+      for card in hand:
+        if card in ['J', 'Q', 'K']:
+          value += 10
+        elif card == 'A':
+          num_aces += 1
+        else:
+          value += int(card)
+
+      for _ in range(num_aces):
+          value += 11 if value <= 10 else 1
+      return value
 
 # takes a list of cards and displays them on the screen
   def display_hand(hand, player_name=None, above=False, is_dealer=False, show_all=True):
-    if above and is_dealer:
-      print("Dealer's hand: ", end="")
-    if player_name:
-      print(f"{player_name}'s hand: ", end="")
-      for card in hand:
-        print(str(card) + " ", end="")
-      print(f"({hand_value(hand)})")
-    elif not above and not is_dealer:
-      for i, card in enumerate(hand):
-        if i == 0 and show_all:
-          print(str(card) + " ", end="")
-        elif i == 0 and not show_all:
-          print("[hidden] ", end="")
-        else:
-          print(str(card) + " ", end="")
-      print(f"({hand_value(hand)})")
-    elif not above and is_dealer:
-      print("\nDealer's hand: ", end="")
-      print("[hidden] " if show_all else str(hand[0]) + " ", end="")
-      print(f"({hand_value([hand[0]])})", end="")
-    else:
-      for i, card in enumerate(hand):
-        if i == 0 and above:
-          print(str(card) + " ", end="")
-        elif i == 0 and not above and not show_all:
-          print("[hidden] ", end="")
-        else:
-          print(str(card) + " ", end="")
-      if not above and not show_all:
-        print("[hidden] ", end="")
-      print(f"({hand_value(hand)})")
+      if above and is_dealer:
+        print("Dealer's hand: ", end="")
+      if player_name:
+          print(f"{player_name}'s hand: ", end="")
+          for card in hand:
+              print(f"{str(card)} ", end="")
+          print(f"({hand_value(hand)})")
+      elif not above and not is_dealer:
+          for i, card in enumerate(hand):
+              if i == 0 and show_all or i != 0:
+                  print(f"{str(card)} ", end="")
+              else:
+                  print("[hidden] ", end="")
+          print(f"({hand_value(hand)})")
+      elif not above:
+          print("\nDealer's hand: ", end="")
+          print("[hidden] " if show_all else f"{str(hand[0])} ", end="")
+          print(f"({hand_value([hand[0]])})", end="")
+      else:
+          for i, card in enumerate(hand):
+              if i == 0 and above or i != 0 or show_all:
+                  print(f"{str(card)} ", end="")
+              else:
+                  print("[hidden] ", end="")
+          if not above and not show_all:
+            print("[hidden] ", end="")
+          print(f"({hand_value(hand)})")
 
 # represents the player's turn in the game
   def player_turn(dealer_hand):
-    player_hand = deal_cards(2)
-    print("Dealer's hand:")
-    print(str(dealer_hand[0]) + " [hidden] ", end="")
-    time.sleep(.5)
-    print("\n\nYour hand:", "\n", end=' ')
-    display_hand(player_hand, is_dealer=False, above=True, show_all=True)
-    time.sleep(.5)
-  
-    while True:
-      if hand_value(player_hand) > 21:
-        print("Bust! You lose.")
-        time.sleep(1)
-        return []
+      player_hand = deal_cards(2)
+      print("\n\nDealer's hand:")
+      print(f"{str(dealer_hand[0])} [hidden] ", end="")
       time.sleep(.5)
-      choice = input("\nDo you want to (h)it or (s)tand? ")
-      if choice.lower() == 'hit' or choice.lower() == 'h':
-        player_hand += deal_cards(1)
-        print("\nYour hand:", "\n", end=' ')
-        display_hand(player_hand, is_dealer=False, above=True, show_all=True)
-      elif choice.lower() == 'stand' or choice.lower() == 's':
-        print("\nYour final hand:", end=' ')
-        display_hand(player_hand, is_dealer=False)
-      else:
-        print("Error. Please hit or stand.")
-        time.sleep(1)
-        exit()
-  
-    return player_hand
+      print("\n\nYour hand:", "\n", end=' ')
+      display_hand(player_hand, is_dealer=False, above=True, show_all=True)
+      time.sleep(.5)
+
+      while True:
+          if hand_value(player_hand) > 21:
+            print("Bust! You lose.")
+            time.sleep(1)
+            return []
+          
+          time.sleep(.5)
+          choice = input("\nDo you want to (h)it or (s)tand? ")
+
+          if choice.lower() in ['hit', 'h']:
+              player_hand += deal_cards(1)
+              print("\nYour hand:", "\n", end=' ')
+              display_hand(player_hand, is_dealer=False, above=True, show_all=True)
+          elif choice.lower() in ['stand', 's']:
+              print("\nYour final hand:", end=' ')
+              display_hand(player_hand, is_dealer=False)
+              break
+          else:
+              print("Error. Please hit or stand.")
+              time.sleep(1)
+              exit()
+
+      return player_hand
 
 # represents the dealer's turn in the game
-  def dealer_turn(player_hand, dealer_hand):
+  def dealer_turn(dealer_hand):
     print("\n\nDealer's hand:")
     display_hand(dealer_hand)
     time.sleep(.5)
@@ -151,6 +150,8 @@ if game_mode == "1":
       dealer_hand += deal_cards(1)
       print("\nDealer hits:")
       display_hand(dealer_hand)
+      print("\n")
+      time.sleep(1)
   
 # deals two cards to both the player and the dealer and returns the dealer's hand and the player's hand
   def deal_initial_hands():
@@ -158,32 +159,23 @@ if game_mode == "1":
     player_hand = deal_cards(2)
     return dealer_hand, player_hand
   
-# This function is the main program that runs the game
+# this function is the main program that runs the game
   def main():
-    
-    print("\nWelcome to  Singleplayer Blackjack!\n\n")
-    time.sleep(1)
-
     dealer_hand, player_hand = deal_initial_hands()
   
-
-
     h = 1
     while h == 1:   
-  
-
       player_hand = player_turn(dealer_hand)
       if hand_value(player_hand) == 21:
-          print("You have a blackjack! You win!")
+          print("\nYou have a blackjack!")
   
-      dealer_turn(player_hand, dealer_hand)
+      dealer_turn(dealer_hand)
       if hand_value(dealer_hand) == 21:
-          print("Dealer has blackjack! You lose!")
+          print("\nDealer has blackjack!")
 
       player_value = hand_value(player_hand)
       dealer_value = hand_value(dealer_hand)
      
-  
       if dealer_value > 21:
         print("\nDealer busts! You win!")
       elif dealer_value > player_value:
@@ -194,19 +186,21 @@ if game_mode == "1":
         print("\nIt's a tie!")
       break
 
-    play_again = input("Do you want to play again? (Y/N) ").lower()
+    time.sleep(1)
+    play_again = input("\nDo you want to play again? (Y/N) ").lower()
     if play_again == "y":
         main()
     else:
-        print("Thanks for playing!")
+        print("\nThanks for playing!")
+        time.sleep(1)
         exit()
     
   main()
 
-# Multiplayer
+# multiplayer
 elif game_mode == "2":
 
-  animation = ["Starting Multiplayer game.","Starting Multiplayerr game..", "Starting Multiplayer game..."]
+  animation = ["Starting Multiplayer game.","Starting Multiplayer game..", "Starting Multiplayer game..."]
 
   print("\n\n")
 
@@ -217,6 +211,10 @@ elif game_mode == "2":
 
   time.sleep(1)
   print("\n")
+
+  time.sleep(1)
+  print("\nWelcome to  Multiplayer Blackjack!\n\n")
+  time.sleep(1)
 
   deck = list(range(2, 11)) + ['J', 'Q', 'K', 'A']
   deck *= 4
@@ -229,7 +227,7 @@ elif game_mode == "2":
   def hand_value(hand):
       value = 0
       num_aces = 0
-  
+
       for card in hand:
           if card in ['J', 'Q', 'K']:
               value += 10
@@ -237,109 +235,113 @@ elif game_mode == "2":
               num_aces += 1
           else:
               value += int(card)
-  
-      for i in range(num_aces):
-          if value + 11 <= 21:
-              value += 11
-          else:
-              value += 1
-  
+
+      for _ in range(num_aces):
+          value += 11 if value <= 10 else 1
       return value
-  
+
 # takes a list of cards and displays them on the screen
   def display_hand(hand, player_name=None, above=False, is_dealer=False, show_all=True):
-    if above and is_dealer:
-      print("Dealer's hand: ", end="")
-    if player_name:
-      for card in hand:
-        print(str(card) + " ", end="")
-      print(f"({hand_value(hand)})")
-  
-      
-    elif not above and not is_dealer:
-      for i, card in enumerate(hand):
-        if i == 0 and show_all:
-          print(str(card) + " ", end="")
-        elif i == 0 and not show_all:
-          print("[hidden] ", end="")
-        else:
-          print(str(card) + " ", end="")
-      print(f"({hand_value(hand)})")
-    elif not above and is_dealer:
-      print("\nDealer's hand: ", end="")
-      print("[hidden] " if show_all else str(hand[0]) + " ", end="")
-      print(f"({hand_value([hand[0]])})", end="")
-    else:
-      for i, card in enumerate(hand):
-        if i == 0 and above:
-          print(str(card) + " ", end="")
-        elif i == 0 and not above and not show_all:
-          print("[hidden] ", end="")
-        else:
-          print(str(card) + " ", end="")
-      if not above and not show_all:
-        print("[hidden] ", end="")
-      print(f"({hand_value(hand)})")
+      if above and is_dealer:
+        print("Dealer's hand: ", end="")
+      if player_name:
+          for card in hand:
+              print(f"{str(card)} ", end="")
+          print(f"({hand_value(hand)})")
+      elif not above and not is_dealer:
+          for i, card in enumerate(hand):
+              if i == 0 and show_all or i != 0:
+                  print(f"{str(card)} ", end="")
+              else:
+                  print("[hidden] ", end="")
+          print(f"({hand_value(hand)})")
+      elif not above:
+          print("\nDealer's hand: ", end="")
+          print("[hidden] " if show_all else f"{str(hand[0])} ", end="")
+          print(f"({hand_value([hand[0]])})", end="")
+      else:
+          for i, card in enumerate(hand):
+              if i == 0 and above or i != 0 or show_all:
+                  print(f"{str(card)} ", end="")
+              else:
+                  print("[hidden] ", end="")
+          if not above and not show_all:
+            print("[hidden] ", end="")
+          print(f"({hand_value(hand)})")
   
 # represents the player 1's turn in the game
   def player_turn_1(player1_hand, dealer_hand):
       player1_hand = deal_cards(2)
       print("\n\nDealer's hand:")
-      print(str(dealer_hand[0]) + " [hidden] ", end="")
+      print(f"{str(dealer_hand[0])} [hidden] ", end="")
+      time.sleep(.5)
       print("\n\nPlayer 1's hand:", "\n", end=' ')
       display_hand(player1_hand, player_name="Player 1", is_dealer=False, above=True, show_all=True)
-  
+      time.sleep(.5)
+
       while True:
           if hand_value(player1_hand) > 21:
               print("Bust! Player 1 loses.")
               time.sleep(1)
               return []
-  
+            
+          time.sleep(.5)
           choice = input("\nPlayer 1, do you want to (h)it or (s)tand? ")
-          if choice.lower() == 'hit' or choice.lower() == 'h':
+
+          if choice.lower() in ['hit', 'h']:
               player1_hand += deal_cards(1)
               print("\nPlayer 1's hand:", "\n", end=' ')
               display_hand(player1_hand, player_name="Player 1", is_dealer=False, above=True, show_all=True)
-          elif choice.lower() == 'stand' or choice.lower() == 's':
+          elif choice.lower() in ['stand', 's']:
               print("\nPlayer 1's final hand:", end=' ')
               display_hand(player1_hand, player_name="Player 1", is_dealer=False)
+              break
           else:
               print("Error. Please hit or stand.")
               time.sleep(1)
               exit()
-  
+              
       return player1_hand
   
 # represents the player 2's turn in the game
   def player_turn_2(player2_hand, dealer_hand):
-    player_hand = deal_cards(2)
-    print("\n\nDealer's hand:")
-    print(str(dealer_hand[0]) + " [hidden] ", end="")
-    print("\n\nPlayer 2's hand:", "\n", end=' ')
-    display_hand(player_hand, player_name="Player 2", is_dealer=False, above=True, show_all=True)
-  
-    while True:
-      if hand_value(player_hand) > 21:
-        print("Bust! Player 2 loses.")
-        time.sleep(1)
-        return []
-  
-      choice = input("\nPlayer 2, do you want to (h)it or (s)tand? ")
-      if choice.lower() == 'hit' or choice.lower() == 'h':
-        player_hand += deal_cards(1)
-        print("\nPlayer 2's hand:", "\n", end=' ')
-        display_hand(player_hand, player_name="Player 2", is_dealer=False, above=True, show_all=True)
-      elif choice.lower() == 'stand' or choice.lower() == 's':
-        print("\nPlayer 2's final hand:", end=' ')
-        display_hand(player_hand, player_name="Player 2", is_dealer=False)
-        break
-  
-    return player_hand
+      player2_hand = deal_cards(2)
+      print("\n\nDealer's hand:")
+      print(f"{str(dealer_hand[0])} [hidden] ", end="")
+      time.sleep(.5)
+      print("\n\nPlayer 2's hand:", "\n", end=' ')
+      display_hand(player2_hand, player_name="Player 2", is_dealer=False, above=True, show_all=True)
+      time.sleep(.5)
+
+      while True:
+          if hand_value(player2_hand) > 21:
+            print("Bust! Player 2 loses.")
+            time.sleep(1)
+            return []
+          
+          time.sleep(.5)
+          choice = input("\nPlayer 2, do you want to (h)it or (s)tand? ")
+
+          if choice.lower() in ['hit', 'h']:
+              player2_hand += deal_cards(1)
+              print("\nPlayer 2's hand:", "\n", end=' ')
+              display_hand(player2_hand, player_name="Player 2", is_dealer=False, above=True, show_all=True)
+          elif choice.lower() in ['stand', 's']:
+              print("\nPlayer 2's final hand:", end=' ')
+              display_hand(player2_hand, player_name="Player 2", is_dealer=False)
+              break
+          else:
+              print("Error. Please hit or stand.")
+              time.sleep(1)
+              exit()
+
+      return player2_hand
   
 # represents the dealer's turn in the game
   def dealer_turn(dealer_hand):
     print("\n\nDealer's hand:")
     display_hand(dealer_hand)
+    time.sleep(.5)
   
     while hand_value(dealer_hand) < 17:
       dealer_hand += deal_cards(1)
@@ -358,77 +360,72 @@ elif game_mode == "2":
       player1_value = hand_value(player1_hand)
       player2_value = hand_value(player2_hand)
       dealer_value = hand_value(dealer_hand)
-      
+
       if player1_value > 21:
           if player2_value > 21:
-              print("Both players bust! Dealer wins!")
+              print("\nBoth players bust! Dealer wins!")
           else:
-              print("Player 1 busts! Player 2 wins!")
+              print("\nPlayer 1 busts! Player 2 wins!")
       elif player2_value > 21:
-          print("Player 2 busts! Player 1 wins!")
-      else:
-          if dealer_value > 21:
-              if player1_value == player2_value:
-                  print("Both players win! Dealer busts!")
-              elif player1_value > player2_value:
-                  print("Player 1 wins! Both players beat the dealer!")
-              else:
-                  print("Player 2 wins! Both players beat the dealer!")
+          print("\nPlayer 2 busts! Player 1 wins!")
+      elif dealer_value > 21:
+          if player1_value == player2_value:
+              print("\nBoth players win! Dealer busts!")
+          elif player1_value > player2_value:
+              print("\nPlayer 1 wins! Both players beat the dealer!")
           else:
-              if dealer_value == player1_value == player2_value:
-                  print("It's a three-way tie!")
-              elif dealer_value == player1_value:
-                  if dealer_value > player2_value:
-                      print("Dealer and Player 1 tie! Dealer wins against Player 2!")
-                  elif dealer_value < player2_value:
-                      print("Dealer and Player 2 tie! Player 2 wins against Player 1!")
-              elif dealer_value == player2_value:
-                  if dealer_value > player1_value:
-                      print("Dealer and Player 2 tie! Dealer wins against Player 1!")
-                  elif dealer_value < player1_value:
-                      print("Dealer and Player 1 tie! Player 1 wins against Player 2!")
-              elif player1_value == player2_value:
-                  if player1_value > dealer_value:
-                      print("Both players win against Dealer!")
-                  else:
-                      print("Dealer wins against both players!")
-              else:
-                  if dealer_value > player1_value and dealer_value > player2_value:
-                      print("Dealer wins against both players!")
-                  elif player1_value > dealer_value and player1_value > player2_value:
-                      print("Player 1 wins!")
-                  elif player2_value > dealer_value and player2_value > player1_value:
-                      print("Player 2 wins!")
-                  else:
-                      print("It's a tie!")
+              print("\nPlayer 2 wins! Both players beat the dealer!")
+      elif dealer_value == player1_value == player2_value:
+          print("\nIt's a three-way tie!")
+      elif dealer_value == player1_value:
+          if dealer_value > player2_value:
+              print("\nDealer and Player 1 tie! Dealer wins against Player 2!")
+          elif dealer_value < player2_value:
+              print("\nDealer and Player 2 tie! Player 2 wins against Player 1!")
+      elif dealer_value == player2_value:
+          if dealer_value > player1_value:
+              print("\nDealer and Player 2 tie! Dealer wins against Player 1!")
+          elif dealer_value < player1_value:
+              print("\nDealer and Player 1 tie! Player 1 wins against Player 2!")
+      elif player1_value == player2_value:
+          if player1_value > dealer_value:
+              print("\nBoth players win against Dealer!")
+          else:
+              print("\nDealer wins against both players!")
+      elif dealer_value > player1_value and dealer_value > player2_value:
+          print("\nDealer wins against both players!")
+      elif player1_value > dealer_value and player1_value > player2_value:
+          print("\nPlayer 1 wins!")
+      elif player2_value > dealer_value and player2_value > player1_value:
+          print("\nPlayer 2 wins!")
+      else:
+          print("\nIt's a tie!")
    
 # This function is the main program that runs the game
-  def main():
-      
-      print("Welcome to  Multiplayer Blackjack!\n")
-      time.sleep(.5)
-    
-      player1_hand = []
-      player2_hand = []
-      dealer_hand = []
-  
-      player1_hand, player2_hand, dealer_hand = deal_initial_hands()
-  
-      player_turn_1(player1_hand, dealer_hand)
-      player_turn_2(player2_hand, dealer_hand)
-      dealer_turn(dealer_hand)
-      determine_winner(player1_hand, player2_hand, dealer_hand)
-  
-      play_again = input("Do you want to play again? (Y/N) ").lower()
-      if play_again == "y":
-          main()
-      else:
-          print("Thanks for playing!")
-          exit()
+  def main(): 
+    player1_hand = []
+    player2_hand = []
+    dealer_hand = []
+
+    player1_hand, player2_hand, dealer_hand = deal_initial_hands()
+
+    player_turn_1(player1_hand, dealer_hand)
+    player_turn_2(player2_hand, dealer_hand)
+    dealer_turn(dealer_hand)
+    determine_winner(player1_hand, player2_hand, dealer_hand)
+
+    time.sleep(1)
+    play_again = input("\nDo you want to play again? (Y/N) ").lower()
+    if play_again == "y":
+        main()
+    else:
+        print("\nThanks for playing!")
+        time.sleep(1)
+        exit()
 
   main()
 
-# Autonomous
+# autonomous
 elif game_mode == "3":
 
   animation = ["Starting Autonomous game.","Starting Autonomous game..", "Starting Autonomous game..."]
@@ -443,6 +440,10 @@ elif game_mode == "3":
   time.sleep(1)
   print("\n")
 
+  time.sleep(1)
+  print("\nWelcome to  Autonomous Blackjack!")
+  time.sleep(1)
+
   deck = list(range(2, 11)) + ['J', 'Q', 'K', 'A']
   deck *= 4
 
@@ -455,7 +456,7 @@ elif game_mode == "3":
   def hand_value(hand):
       value = 0
       num_aces = 0
-  
+
       for card in hand:
           if card in ['J', 'Q', 'K']:
               value += 10
@@ -463,13 +464,9 @@ elif game_mode == "3":
               num_aces += 1
           else:
               value += int(card)
-  
-      for i in range(num_aces):
-          if value + 11 <= 21:
-              value += 11
-          else:
-              value += 1
-  
+
+      for _ in range(num_aces):
+          value += 11 if value <= 10 else 1
       return value
   
 # represents the autoplayer's turn in the game
@@ -494,20 +491,20 @@ elif game_mode == "3":
 # determines the winner
   def determine_winner(player_hand, dealer_hand):
 
-    player_total = hand_value(player_hand)
-    dealer_total = hand_value(dealer_hand)
+      player_total = hand_value(player_hand)
+      dealer_total = hand_value(dealer_hand)
 
-
-    if player_total > 21:
-        return "Dealer"
-    elif dealer_total > 21:
-        return "Player"
-    elif player_total > dealer_total:
-        return "Player"
-    elif dealer_total > player_total:
-        return "Dealer"
-    else:
-        return "Tie"
+      if (
+          player_total > 21
+          or dealer_total <= 21
+          and player_total <= dealer_total
+          and dealer_total > player_total
+      ):
+          return "Dealer"
+      elif dealer_total > 21 or player_total > dealer_total:
+          return "Player"
+      else:
+          return "Tie"
 
 # deals two cards to both the autoplayer and the autodealer and returns the autodealer's hand and the autoplayer's hand
   def deal_initial_hands():
@@ -518,18 +515,39 @@ elif game_mode == "3":
 # This function is the main program that runs the game
   def main():
       
-      print("\nWelcome to  Autonomous Blackjack!")
+      
+      num_games = input("\n\nHow many games would you like to play? ")
+      if not num_games.isdigit():
+          print("Error. Please hit or stand.")
+          time.sleep(1)
+          exit()
+      else:
+          num_games = int(num_games)
+      
       time.sleep(.5)
 
-      num_games = int(input("\n\nHow many games would you like to play? "))
-
       global player_stand
-      player_stand = int(input("At what value would you like for the player to hold? "))
+      player_stand = int(input("\nAt what value would you like for the player to hold? "))
+
+      animation = ["Loading Simulation ⢿ ", "Loading Simulation ⣻ ", "Loading Simulation ⣽ ", "Loading Simulation ⣾ ",
+                   "Loading Simulation ⣷ ", "Loading Simulation ⣯ ", "Loading Simulation ⣟ ", "Loading Simulation ⡿ ", 
+                   "Loading Simulation ⢿ ", "Loading Simulation ⣻ ", "Loading Simulation ⣽ ", "Loading Simulation ⣾ ",
+                   "Loading Simulation ⣷ ", "Loading Simulation ⣯ ", "Loading Simulation ⣟ ", "Loading Simulation ⡿ ", ]
+
+      print("\n\n")
+
+      for i in range(len(animation)):
+          time.sleep(.2)
+          sys.stdout.write("\r" + animation[i % len(animation)])
+          sys.stdout.flush()
+
+      time.sleep(1)
+      print("\n")
+
   
       with open('blackjack_results.csv', mode='w') as file:
           writer = csv.writer(file, lineterminator = '\n')
           writer.writerow(["Game", "Dealer Win", "Player Win", "Ties", "Dealer Blackjack", "Player Blackjack", "No blackjack"])
-
 
           player_wins = 0
           dealer_wins = 0
@@ -589,8 +607,18 @@ elif game_mode == "3":
               total_bj = int(dealer_bj) + int(player_bj)
 
           # Display final results
-          print("\n--- Final Results ---\n")
-          time.sleep(2)
+          animation = ["    Final Results    ", "  - Final Results -   ", "--- Final Results --- "]
+
+          print("\n\n")
+
+          for i in range(len(animation)):
+              time.sleep(.4)
+              sys.stdout.write("\r" + animation[i % len(animation)])
+              sys.stdout.flush()
+
+          time.sleep(1)
+          print("\n")
+
           print(f"Player Stand: {player_stand}")
           print(f"Player Wins: {player_wins}")
           print(f"Dealer Wins: {dealer_wins}")
@@ -606,12 +634,12 @@ elif game_mode == "3":
           explode = (0.05, 0.05, 0)
 
           fig, ax = plt.subplots()
-          plt.pie(y, labels = ylabels, explode=explode, autopct='%1.1f%%', textprops={'fontsize': 7}, radius=.7, startangle=90, colors=['black', 'red', 'green'])
+          plt.pie(y, labels = ylabels, explode=explode, autopct='%1.1f%%', textprops={'fontsize': 8, 'weight':'bold'}, radius=.7, startangle=90, colors=['black', 'red', 'green'])
           
           ax.legend(ylabels, title="Legend", loc="center right", bbox_to_anchor=(0.8, 0, 0.5, 1))
 
           fig.set_facecolor('#4f4f4f')
-          ax.set_title('Chances of a blackjack compared to no blackjack')
+          ax.set_title('Chances of a blackjack compared to no blackjack', fontweight = 'bold')
 
           for text in ax.texts:
             text.set_color('yellow')
@@ -621,12 +649,12 @@ elif game_mode == "3":
           explode = (0, 0, 0)
 
           fig, ax = plt.subplots()
-          plt.pie(z, labels = zlabels, explode=explode, autopct='%1.1f%%', textprops={'fontsize': 7}, radius=.7, startangle=90, colors=['blue', 'red', 'yellow'])
+          plt.pie(z, labels = zlabels, explode=explode, autopct='%1.1f%%', textprops={'fontsize': 8, 'weight':'bold'}, radius=.7, startangle=90, colors=['blue', 'red', 'yellow'])
 
           ax.legend(zlabels, title="Legend", loc="center left", bbox_to_anchor=(0.9, 0, 0.5, 1))
 
           fig.set_facecolor('#4f4f4f')
-          ax.set_title('Chance of Winning')
+          ax.set_title('Chance of Winning', fontweight = 'bold')
 
           for text in ax.texts:
             text.set_color('black')

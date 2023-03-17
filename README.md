@@ -62,7 +62,6 @@ REFERENCES:
 - https://github.com/sepandhaghighi/art#usage
 - https://www.w3schools.com/python/python_variables_global.asp
 -https://stackoverflow.com/questions/22029562/python-how-to-make-simple-animated-loading-while-process-is-running
-- 
 
  
 

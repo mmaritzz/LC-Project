@@ -57,11 +57,12 @@ REFERENCES:
 - https://www.w3schools.com/python/python_pip.asp
 - https://matplotlib.org/stable/gallery/pie_and_polar_charts/pie_features.html
 - https://docs.github.com/en/repositories/working-with-files/managing-files/adding-a-file-to-a-repository
+- https://docs.github.com/en/get-started/writing-on-github/getting-started-with-writing-and-formatting-on-github/basic-writing-and-formatting-syntax
 - https://www.w3schools.com/python/python_file_write.asp
 - https://www.w3schools.com/python/python_try_except.asp
 - https://github.com/sepandhaghighi/art#usage
 - https://www.w3schools.com/python/python_variables_global.asp
--https://stackoverflow.com/questions/22029562/python-how-to-make-simple-animated-loading-while-process-is-running
+- https://stackoverflow.com/questions/22029562/python-how-to-make-simple-animated-loading-while-process-is-running
 
  
 

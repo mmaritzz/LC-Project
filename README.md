@@ -48,10 +48,11 @@ Since many functions are being reused, it may become apparent that it will be ea
 
 Troubleshooting this project was smooth. If I got an error, I either knew how to fix it, or I could google a fix, or if I needed to learn how to do something correctly, I would look it up on w3schools or other resources. The hardest part of this code was getting the multiplayer aspect to work. I could not tell you why, but I kept slipping up, then I would fix that issue, and another would arise. I did not like this point in the code. One night, everything just worked, and I was overjoyed. I put all the projects into a final project, and everything was fine and dandy. Troubleshooting the autonomous was rough, but it evened out quickly. Mainly because I wanted it to show a specific way, once I got that down, I added .csv capabilities. This process started off rough, but I nailed it in the end. I am thrilled with how the information comes out on the CSV file. I did the graphs in a couple of hours. I am saddened that there is a lot you can do to make the pie charts look good, but I will take how they look. It is easy to read and portrayed in a visually pleasing manner. Implementing and testing my hypothesis was interesting. I thought about changing the dealer's stand value, but I soon realized there is no practical use for this as you cannot change the dealer's stand value in standard blackjack, so what if the player stood on a specific number or higher? What kind of results could this give off? can it give an optimal strategy for winning? I believe this is more practical and knowledgeable as its a viable and legal strategy
 
+### 6. Evaluation (approximately 350 words): 0
 
+...
 
-
-REFERENCES:
+### 7. References
 
 - https://code.visualstudio.com/docs/python/python-tutorial
 - https://www.w3schools.com/python/python_pip.asp

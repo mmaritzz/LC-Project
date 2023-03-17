@@ -134,7 +134,7 @@ if game_mode == "1":
               display_hand(player_hand, is_dealer=False)
               break
           else:
-              print("Error. Please hit or stand.")
+              print("Error. Please hit or stand.\n\n")
               time.sleep(1)
               exit()
 
@@ -297,7 +297,7 @@ elif game_mode == "2":
               display_hand(player1_hand, player_name="Player 1", is_dealer=False)
               break
           else:
-              print("Error. Please hit or stand.")
+              print("Error. Please hit or stand.\n\n")
               time.sleep(1)
               exit()
               
@@ -331,7 +331,7 @@ elif game_mode == "2":
               display_hand(player2_hand, player_name="Player 2", is_dealer=False)
               break
           else:
-              print("Error. Please hit or stand.")
+              print("Error. Please hit or stand.\n\n")
               time.sleep(1)
               exit()
 
@@ -514,20 +514,29 @@ elif game_mode == "3":
   
 # This function is the main program that runs the game
   def main():
-      
-      
-      num_games = input("\n\nHow many games would you like to play? ")
-      if not num_games.isdigit():
-          print("Error. Please hit or stand.")
+      num_games_str = input("\n\nHow many games would you like to play? ")
+
+      if not num_games_str.isdigit():
+          time.sleep(.5)
+          print("Error. Please hit or stand.\n\n")
           time.sleep(1)
           exit()
       else:
-          num_games = int(num_games)
-      
-      time.sleep(.5)
+          num_games = int(num_games_str)
+          time.sleep(.5)
+
 
       global player_stand
-      player_stand = int(input("\nAt what value would you like for the player to hold? "))
+      player_stand_str = input("\nAt what value would you like for the player to hold? ")
+
+      if not player_stand_str.isdigit():
+          time.sleep(.5)
+          print("Error. Please hit or stand.\n\n")
+          time.sleep(1)
+          exit()
+      else:
+          player_stand = int(player_stand_str)
+
 
       animation = ["Loading Simulation ⢿ ", "Loading Simulation ⣻ ", "Loading Simulation ⣽ ", "Loading Simulation ⣾ ",
                    "Loading Simulation ⣷ ", "Loading Simulation ⣯ ", "Loading Simulation ⣟ ", "Loading Simulation ⡿ ", 
@@ -639,7 +648,7 @@ elif game_mode == "3":
           ax.legend(ylabels, title="Legend", loc="center right", bbox_to_anchor=(0.8, 0, 0.5, 1))
 
           fig.set_facecolor('#4f4f4f')
-          ax.set_title('Chances of a blackjack compared to no blackjack', fontweight = 'bold')
+          ax.set_title('Chances of a Blackjack', fontweight = 'bold')
 
           for text in ax.texts:
             text.set_color('yellow')
@@ -654,7 +663,7 @@ elif game_mode == "3":
           ax.legend(zlabels, title="Legend", loc="center left", bbox_to_anchor=(0.9, 0, 0.5, 1))
 
           fig.set_facecolor('#4f4f4f')
-          ax.set_title('Chance of Winning', fontweight = 'bold')
+          ax.set_title('Chances of Winning', fontweight = 'bold')
 
           for text in ax.texts:
             text.set_color('black')
@@ -666,6 +675,6 @@ elif game_mode == "3":
 
 else:
     
-    print("Error. Please enter 1, 2, or 3.")
+    print("Error. Please enter 1, 2, or 3.\n\n")
     time.sleep(1)
 

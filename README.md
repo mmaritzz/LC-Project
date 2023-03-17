@@ -1,4 +1,4 @@
-# LC-Project
+# LCCS-Project
 
 
 ## ***Write up is below the graphs.***

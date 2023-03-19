@@ -106,7 +106,7 @@ By incorporating these various improvements, I could create a more polished and 
 | 4. Implementation | 457 |
 | 5. Testing | 348 |
 | 6. Evaluation | 396 |
-| **Total:** | 2298 |
+| **Total:** | **2298** |
 
 
 

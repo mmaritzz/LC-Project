@@ -670,7 +670,7 @@ elif game_mode == "3":
         # If input is invalid, print error message and exit
         if not num_games_str.isdigit():
             time.sleep(0.5)
-            print("Error. Please hit or stand.\n\n")
+            print("Error. Please enter a valid input.\n\n")
             time.sleep(1)
             exit()
         else:
